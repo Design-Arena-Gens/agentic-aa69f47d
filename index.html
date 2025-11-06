@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лол</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 8rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: bounce 1s infinite;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        h1:hover {
+            animation: spin 0.5s ease-in-out;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            margin-top: 2rem;
+            opacity: 0.9;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .counter {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="lol">ЛОЛ</h1>
+        <div class="subtitle">😂 Нажми на меня! 😂</div>
+        <div class="counter">Кликов: <span id="count">0</span></div>
+    </div>
+
+    <script>
+        const lol = document.getElementById('lol');
+        const countElement = document.getElementById('count');
+        let count = 0;
+
+        const emojis = ['😂', '🤣', '😆', '😹', '🤪', '😜', '🎉', '✨'];
+
+        function createEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + 'vw';
+            emoji.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(emoji);
+
+            setTimeout(() => {
+                emoji.remove();
+            }, 3000);
+        }
+
+        lol.addEventListener('click', () => {
+            count++;
+            countElement.textContent = count;
+
+            // Create multiple emojis
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createEmoji(), i * 100);
+            }
+
+            // Change colors randomly
+            const colors = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+            ];
+            document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+        });
+
+        // Auto-generate emojis occasionally
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                createEmoji();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
